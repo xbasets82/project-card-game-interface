@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" type="text/css" href="./index.css" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script type="module" src="/dist/blackJack.js"></script>
+    <header>
+      <div class="fRow jCenter">
+        <h1>BLACK JACK</h1>
+      </div>
+    </header>
+    <main>
+      <div class="fRow jSpaceAround">
+        <div class="fColumn">
+          <h2>Add Player</h2>
+          <form class="fRow jStart aBaseLine">
+            <label> <input type="button" name="addPlayer" value="+" /></label>
+            <label class=""
+              >Name : <input type="text" name="newPlayer"
+            /></label>
+            <label
+              >Color :
+              <input type="color" list="presetColors" value="#FF0000" />
+              <datalist id="presetColors">
+                <option>#FF0000</option>
+                <option>#00FF00</option>
+                <option>#0000FF</option>
+              </datalist></label
+            >
+          </form>
+        </div>
+        <div class="fColumn">
+            <h2>Players:</h2>
+          <table>
+            <thead>
+              <tr>
+                <th>Order</th>
+                <th>Name</th>
+                <th>Color</th>
+              </tr>
+            </thead>
+            <tbody></tbody>
+          </table>
+        </div>
+      </div>
+      <button class="start">Start</button>
+      <div class="fColumn jCenter maxWidth">    
+          <h2>Crupier</h2>
+          <div id="CrupierCards" class="fRow jCenter aCenter">
+          </div>
+          <div class="totalCrupier"></div>
+      </div>
+      <div id="PlayersCards" class="fRow jSpaceAround">
+
+      </div>
+    </main>
+  </body>
+</html>
