@@ -7,6 +7,11 @@ import {
   askForOptions,
   findAction,
   excuteAction,
+  validateHand,
+  controlSpecialCases,
+  compareResults,
+  validateTopCrupier,
+  replaceCardValue,
 } from 'Game/mainGame.mjs';
 import { createDeck } from 'Deck/mainDeck.mjs';
 import { doc } from 'prettier';
@@ -20,6 +25,7 @@ let cardsImages = new Map();
 
 function showCrupierCards() {
   let crupierDiv = document.querySelector('#CrupierCards');
+  crupierDiv.innerHTML='';
   for (let i = 0; i < crupier.hand.cards.length; i++) {
     let card = document.createElement('img');
     card.src = cardsImages.get(
@@ -30,18 +36,90 @@ function showCrupierCards() {
   }
 }
 
-function processOption(playerIndex,key){
-    let action = findAction(key);
-    if (action !== undefined) {
-        let resultAction = excuteAction(action, game);
-        validateTurn(playerIndex, resultAction);
+const crupierTurn = () => {
+  crupier.hand.printHand();
+  if (validateTopCrupier(crupier)) {
+    crupier.hand.cards.push(game.giveCard(game, true));
+    showCrupierCards()
+    crupierTurn();
+  } else {
+    if (crupier.hand.hasHandSpecialValues()) {
+      replaceCardValue(crupier);
+      crupierTurn();
+    } else {
+      console.log('crupier hand:');
+      crupier.hand.printHand();
+      showCrupierCards()
+      compareResults(crupier, players);
+    }
+  }
+};
+
+const playerTurns = () => {
+  console.log(`${players[game.playerTurn].name} : `);
+  showPlayerCards();
+};
+
+const gameProcess = (isCrupier) => {
+  console.log('-------------------------');
+  isCrupier === false ? playerTurns() : crupierTurn();
+};
+
+const setNextTurn = () => {
+  if (game.playerTurn === players.length - 1) {
+    gameProcess(true);
+  } else {
+    game.nextPlayerTurn();
+    gameProcess(false);
+  }
+};
+
+const moreThan21 = (currentTurn) => {
+  console.log(`El jugador ${players[currentTurn].name} se ha pasado`);
+  showPlayerCards();
+};
+
+const noMoreCards = (currentTurn) => {
+  console.log(`El jugador ${players[currentTurn].name} se planta`);
+};
+
+const validateTurn = (playerIndex, result) => {
+  if (playerIndex === game.playerTurn) {
+    players[game.playerTurn].hand.cards.push(result);
+    let handResult = validateHand(playerIndex, players);
+    if (handResult === true) {
+      gameProcess(false);
+    } else {
+      let validateCase = controlSpecialCases(playerIndex, players);
+      if (validateCase === true) {
+        gameProcess(false);
       } else {
-        console.log(`invalid Action!`);
+        moreThan21(playerIndex);
+        setNextTurn(playerIndex);
       }
+    }
+  } else if (game.playerTurn >= players.length) {
+    noMoreCards(playerIndex);
+    gameProcess(true);
+  } else {
+    noMoreCards(playerIndex);
+    gameProcess(false);
+  }
+};
+
+function processOption(playerIndex, key) {
+  let action = findAction(key);
+  if (action !== undefined) {
+    let resultAction = excuteAction(action, game);
+    validateTurn(playerIndex, resultAction);
+  } else {
+    console.log(`invalid Action!`);
+  }
 }
 
 function showPlayerCards() {
   let playersCardsDiv = document.querySelector('#PlayersCards');
+  playersCardsDiv.innerHTML = '';
   for (let i = 0; i < players.length; i++) {
     let playerDiv = document.createElement('div');
     let playerOptionsDiv = document.createElement('div');
@@ -56,15 +134,15 @@ function showPlayerCards() {
     }
     playersCardsDiv.appendChild(playerDiv);
     let options = askForOptions();
-    playerOptionsDiv.classList.add("fColumn");
+    playerOptionsDiv.classList.add('fColumn');
     for (let k = 0; k < options.length; k++) {
-        let option = document.createElement('button');
-        option.value = options[k].action;
-        option.textContent = options[k].action;
-        option.addEventListener('click', function (event) {
-            processOption(i,options[k].key);
-          });
-        playerOptionsDiv.appendChild(option);
+      let option = document.createElement('button');
+      option.value = options[k].action;
+      option.textContent = options[k].action;
+      option.addEventListener('click', function (event) {
+        processOption(i, options[k].key);
+      });
+      playerOptionsDiv.appendChild(option);
     }
     playersCardsDiv.appendChild(playerOptionsDiv);
   }
