@@ -50,7 +50,8 @@ const crupierTurn = () => {
       console.log('crupier hand:');
       crupier.hand.printHand();
       showCrupierCards()
-      compareResults(crupier, players);
+      let results = compareResults(crupier, players);
+      console.log(results);
     }
   }
 };
@@ -58,6 +59,7 @@ const crupierTurn = () => {
 const playerTurns = () => {
   console.log(`${players[game.playerTurn].name} : `);
   showPlayerCards();
+  enablePlayer();
 };
 
 const gameProcess = (isCrupier) => {
@@ -65,7 +67,13 @@ const gameProcess = (isCrupier) => {
   isCrupier === false ? playerTurns() : crupierTurn();
 };
 
+const enablePlayer = ()=>{
+  let divToEnable = document.querySelector(`#cards${players[game.playerTurn].name}`);
+  divToEnable.classList.add("enabled");
+}
+
 const setNextTurn = () => {
+
   if (game.playerTurn === players.length - 1) {
     gameProcess(true);
   } else {
@@ -122,6 +130,7 @@ function showPlayerCards() {
   playersCardsDiv.innerHTML = '';
   for (let i = 0; i < players.length; i++) {
     let playerDiv = document.createElement('div');
+    playerDiv.setAttribute("id",`cards${players[i].name}`);
     let playerOptionsDiv = document.createElement('div');
     for (let j = 0; j < players[i].hand.cards.length; j++) {
       let card = document.createElement('img');
@@ -135,6 +144,7 @@ function showPlayerCards() {
     playersCardsDiv.appendChild(playerDiv);
     let options = askForOptions();
     playerOptionsDiv.classList.add('fColumn');
+    playerOptionsDiv.setAttribute("id",`options${players[i].name}`)
     for (let k = 0; k < options.length; k++) {
       let option = document.createElement('button');
       option.value = options[k].action;
@@ -202,6 +212,7 @@ const startGame = () => {
   getRules();
   getInitialCards();
   showCards();
+  enablePlayer();
 };
 
 const createTextTd = (text) => {

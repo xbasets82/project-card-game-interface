@@ -60,3 +60,6 @@ table{
 .card{
   height: 8rem;
 }
+.enabled{
+  background-color: blue;
+}
