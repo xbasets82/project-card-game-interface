@@ -1,0 +1,13 @@
+{
+    "name": "game",
+    "version":"0.0.1",
+    "description": "game code",
+    "main": "mainGame.mjs",
+    "type": "module",
+    "scripts": {
+        "test":"echo \"Error: no test especified\" && exit 1"
+    },
+    "keywords": [],
+    "author": "xbasets",
+    "license": "ISC"
+}

@@ -1,4 +1,4 @@
-import { createPlayer, createCrupier, newHand } from 'Player/mainPlayer.mjs';
+import { createPlayer, createCrupier, newHand } from 'player/mainPlayer.mjs';
 import {
   giveInitialCards,
   getGame,
@@ -12,8 +12,8 @@ import {
   compareResults,
   validateTopCrupier,
   replaceCardValue,
-} from 'Game/mainGame.mjs';
-import { createDeck } from 'Deck/mainDeck.mjs';
+} from 'game/mainGame.mjs';
+import { createDeck } from 'deck/mainDeck.mjs';
 import { doc } from 'prettier';
 
 let deck;
@@ -246,7 +246,6 @@ function addEventPlayer() {
   const a = document.querySelector('input[type=button]');
   a.addEventListener('click', function (event) {
     event.preventDefault();
-    console.log('You Added a player');
     addNewPlayer();
   });
 }

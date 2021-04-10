@@ -1,0 +1,5 @@
+{
+    "name":"player",
+    "main":"mainPlayer",
+    "type":"module"
+}
