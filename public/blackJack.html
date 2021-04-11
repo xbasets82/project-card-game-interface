@@ -15,14 +15,14 @@
       </div>
     </header>
     <main>
-      <div class="fRow jCenter"> 
+      <div class="fRow jCenter">
         <div class="fColumn">
           <div class="fColumn">
             <table>
               <thead>
                 <tr>
                   <th></th>
-                  <th style="display:none"></th>
+                  <th style="display: none"></th>
                   <th>Name</th>
                   <th>Color</th>
                 </tr>
@@ -34,32 +34,50 @@
                       src="/dist/svg/img/plus.svg"
                       alt="add player"
                       class="tableIcon"
+                      id="addIcon"
                     />
                   </td>
-                  <td style="display:none"></td>
+                  <td style="display: none"></td>
                   <td>
                     <input type="text" id="newPlayer" />
                   </td>
                   <td>
-                    <input type="color" id="playerColor" list="presetColors" value="#FF0000" />
+                    <input
+                      type="color"
+                      id="playerColor"
+                      list="presetColors"
+                      value="#FF0000"
+                    />
                     <datalist id="presetColors">
                       <option>#FF0000</option>
                       <option>#00FF00</option>
                       <option>#0000FF</option>
                     </datalist>
                   </td>
+                  <td><div></div></td>
                 </tr>
               </tbody>
             </table>
           </div>
-
         </div>
         <div class="fColumn jEnd">
-          <img src="/dist/svg/img/black-jack.svg" alt = "start" title="start" class="startImage"/>
+          <img
+            src="/dist/svg/img/go.svg"
+            alt="start"
+            title="start"
+            class="startImage"
+          />
         </div>
       </div>
-      <div class="fColumn jCenter maxWidth">
-        <h2>Crupier</h2>
+      <div class="fColumn jCenter aCenter maxWidth">
+        <div class="fRow jCenter aEnd crupierDiv">
+          <img
+            src="/dist/svg/img/crupierBJ.svg"
+            alt="crupier"
+            tittle="crupier"
+            class="crupier"
+          />
+        </div>
         <div id="CrupierCards" class="fRow jCenter aCenter"></div>
         <div class="totalCrupier"></div>
       </div>

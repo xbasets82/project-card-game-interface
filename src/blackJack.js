@@ -215,8 +215,8 @@ const startGame = () => {
     getInitialCards();
     showCards();
     enablePlayer();
-  }else{
-    alert("no players to play");
+  } else {
+    alert('no players to play');
   }
 };
 
@@ -236,10 +236,23 @@ const createTextTd = (text, isVisible) => {
   return td;
 };
 
-const createImg = () => {
+const deleteRow = (index) => {
+  const tbody = document.querySelector('tbody');
+  let row = tbody.deleteRow(index);
+  if (tbody.rows.length < 4) {
+    let button = document.querySelector('#addIcon');
+    button.setAttribute('disabled', 'false');
+    button.setAttribute('src', '/dist/svg/img/plus.svg');
+  }
+};
+
+const createImg = (index) => {
   let img = document.createElement('img');
   img.setAttribute('src', '/dist/svg/img/minus.png');
   img.classList.add('tableIcon');
+  img.addEventListener('click', function (event) {
+    deleteRow(index);
+  });
   return img;
 };
 
@@ -248,7 +261,8 @@ function createRow() {
   let td = document.createElement('td');
   row.appendChild(createTextTd(playerOrder, false));
   td = document.createElement('td');
-  td.appendChild(createImg());
+  td.classList.add('deleteButtonCell');
+  td.appendChild(createImg(playerOrder));
   row.appendChild(td);
   const name = document.querySelector('#newPlayer');
   row.appendChild(createTextTd(name.value, true));
@@ -261,15 +275,83 @@ function createRow() {
   return row;
 }
 
+const isNameEmpty = () => {
+  const name = document.querySelector('#newPlayer');
+  if (name.value === '') {
+    return true;
+  } else {
+    return false;
+  }
+};
+
+const existsSamePlayerName = () => {
+  let playersTable = document.querySelector('tbody');
+  let numberOfPlayers = playersTable.rows.length;
+  const name = document.querySelector('#newPlayer');
+  for (let i = 0; i < numberOfPlayers; i++) {
+    if (name.value === playersTable.rows[i].cells[2].innerText) {
+      return true;
+    }
+    //  playersTable.rows[i].cells[3].innerText;
+  }
+  return false;
+};
+
+
+const ToHex = function (rgb) { 
+  var hex = Number(rgb).toString(16);
+  if (hex.length < 2) {
+       hex = "0" + hex;
+  }
+  return hex;
+};
+
+function rgbToHex(color) {
+  let rgb = color.replace("(","").replace(")","").replace("rgb","").split(",");
+  return "#" + ToHex(rgb[0]) + ToHex(rgb[1]) + ToHex(rgb[2]);
+}
+
+
+const existsSamePlayerColor = () => {
+  let playersTable = document.querySelector('tbody');
+  let numberOfPlayers = playersTable.rows.length;
+  const color = document.querySelector('#playerColor');
+
+  for (let i = 0; i < numberOfPlayers; i++) {
+    let cell = playersTable.rows[i].cells[3];
+    const style = getComputedStyle(cell);
+    const bgColor = style.backgroundColor;
+    let convertedColor = rgbToHex(bgColor);
+    if (color.value === convertedColor) {
+      return true;
+    }
+  }
+  return false;
+};
+
 function addNewPlayer(button) {
   const tbody = document.querySelector('tbody');
-  if (tbody.rows.length === 4) {
-    alert('No more players can be added');
-    const name = document.querySelector('#newPlayer');
-    name.value = '';
-  } else {
-    tbody.appendChild(createRow());
+
+  switch (true) {
+    case tbody.rows.length === 4:
+      const name = document.querySelector('#newPlayer');
+      name.value = '';
+      break;
+    case isNameEmpty():
+      alert('Name cannot be empty');
+      break;
+    case existsSamePlayerName():
+      alert('There is already a player with that name');
+      break;
+    case existsSamePlayerColor():
+      alert('There is already a player with that color');
+      break;
+    default:
+      tbody.appendChild(createRow());
+      break;
   }
+
+
   if (tbody.rows.length === 4) {
     button.setAttribute('disabled', 'true');
     button.setAttribute('src', '/dist/svg/img/cancel.svg');

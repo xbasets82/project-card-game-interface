@@ -1,5 +1,6 @@
 body{
   font-family: Arial, Helvetica, sans-serif;
+  background-color: #154946;
 }
 h2{
 align-self: center;
@@ -28,13 +29,15 @@ table{
   border-collapse: collapse ;
 }
 tbody{
-  margin-top: 0.5rem;
-  border: 0.2rem solid grey;
+  margin-top: 1rem;
+  border-right: 0.2rem solid grey;
   border-collapse: collapse;
 }
 td{
   margin-left: .5rem;
-  border: 0.1rem solid grey;
+  border-right: 0.2rem solid lightgrey;
+  border-top: 0.2rem solid lightgrey;
+  border-bottom: 0.2rem solid lightgrey;
   text-align: center  ;
 }
 .fRow {
@@ -55,6 +58,9 @@ td{
 .aCenter{
   align-items: center;
 }
+.aEnd{
+  align-items: flex-end;
+}
 .jSpaceAround{
   justify-content: space-around;
 }
@@ -73,24 +79,49 @@ td{
 .maxWidth{
   width: 100%;
 }
+.rounded{
+  border-radius: 0.5rem;
+}
+.crupier{
+  height: 5rem;
+}
+.crupierDiv{
+  height: 6rem;
+}
 #CrupierCards{
-  background-color: red;
+  background-color: rgb(138, 81, 81);
   height: 10rem;
+  border-radius: 0.5rem;
+  width: 50vw;
 }
 .card{
   height: 8rem;
+  margin: .5rem;
 }
 .enabled{
   background-color: blue;
 }
 .tableIcon{
   height: 1rem;
+  margin-right: 0.2rem;
 }
 .startImage{
   height: 4rem;
   margin-left: 2rem;
+  cursor: pointer;
 }
 #addButtonCell{
-  background-color: rgb(201, 231, 230);
-
+  /* background-color: rgb(201, 231, 230); */
+border-top: 0;
+border-bottom: 0;
+margin-right: 0.2rem;
+}
+.deleteButtonCell{
+  border-top: 0;
+  border-bottom: 0;
+  margin-right: 0.2rem;
+}
+#addIcon{
+  margin-right: 0.2rem;
+  cursor: pointer;
 }
