@@ -15,49 +15,55 @@
       </div>
     </header>
     <main>
-      <div class="fRow jSpaceAround">
+      <div class="fRow jCenter"> 
         <div class="fColumn">
-          <h2>Add Player</h2>
-          <form class="fRow jStart aBaseLine">
-            <label> <input type="button" name="addPlayer" value="+" /></label>
-            <label class=""
-              >Name : <input type="text" name="newPlayer"
-            /></label>
-            <label
-              >Color :
-              <input type="color" list="presetColors" value="#FF0000" />
-              <datalist id="presetColors">
-                <option>#FF0000</option>
-                <option>#00FF00</option>
-                <option>#0000FF</option>
-              </datalist></label
-            >
-          </form>
-        </div>
-        <div class="fColumn">
-            <h2>Players:</h2>
-          <table>
-            <thead>
-              <tr>
-                <th>Order</th>
-                <th>Name</th>
-                <th>Color</th>
-              </tr>
-            </thead>
-            <tbody></tbody>
-          </table>
-        </div>
-      </div>
-      <button class="start">Start</button>
-      <div class="fColumn jCenter maxWidth">    
-          <h2>Crupier</h2>
-          <div id="CrupierCards" class="fRow jCenter aCenter">
+          <div class="fColumn">
+            <table>
+              <thead>
+                <tr>
+                  <th></th>
+                  <th style="display:none"></th>
+                  <th>Name</th>
+                  <th>Color</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td id="addButtonCell">
+                    <img
+                      src="/dist/svg/img/plus.svg"
+                      alt="add player"
+                      class="tableIcon"
+                    />
+                  </td>
+                  <td style="display:none"></td>
+                  <td>
+                    <input type="text" id="newPlayer" />
+                  </td>
+                  <td>
+                    <input type="color" id="playerColor" list="presetColors" value="#FF0000" />
+                    <datalist id="presetColors">
+                      <option>#FF0000</option>
+                      <option>#00FF00</option>
+                      <option>#0000FF</option>
+                    </datalist>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
           </div>
-          <div class="totalCrupier"></div>
-      </div>
-      <div id="PlayersCards" class="fRow jSpaceAround">
 
+        </div>
+        <div class="fColumn jEnd">
+          <img src="/dist/svg/img/black-jack.svg" alt = "start" title="start" class="startImage"/>
+        </div>
       </div>
+      <div class="fColumn jCenter maxWidth">
+        <h2>Crupier</h2>
+        <div id="CrupierCards" class="fRow jCenter aCenter"></div>
+        <div class="totalCrupier"></div>
+      </div>
+      <div id="PlayersCards" class="fRow jSpaceAround"></div>
     </main>
   </body>
 </html>

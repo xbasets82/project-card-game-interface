@@ -5,10 +5,16 @@ h2{
 align-self: center;
 }
 input[type="text"]{
-  height:1rem;
+  height:1.5rem;
+  border: 0;
+  font-size: 1rem;
+  text-align: center;
+  background-color: rgb(201, 231, 230);
 }
 input[type="color"]{
-  height: 1rem;
+  height: 1.5rem;
+  border:0;
+  background-color: rgb(201, 231, 230);
 }
 input[type="button"]{
   margin: 0.3rem;
@@ -19,6 +25,17 @@ label{
 }
 table{
   margin-left: 1rem;
+  border-collapse: collapse ;
+}
+tbody{
+  margin-top: 0.5rem;
+  border: 0.2rem solid grey;
+  border-collapse: collapse;
+}
+td{
+  margin-left: .5rem;
+  border: 0.1rem solid grey;
+  text-align: center  ;
 }
 .fRow {
   display: flex;
@@ -47,6 +64,9 @@ table{
 .jCenter{
   justify-content: center;
 }
+.jEnd{
+  justify-content: flex-end;
+}
 .flexExpand{
   flex: 1;
 }
@@ -62,4 +82,15 @@ table{
 }
 .enabled{
   background-color: blue;
+}
+.tableIcon{
+  height: 1rem;
+}
+.startImage{
+  height: 4rem;
+  margin-left: 2rem;
+}
+#addButtonCell{
+  background-color: rgb(201, 231, 230);
+
 }

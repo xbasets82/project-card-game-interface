@@ -25,7 +25,7 @@ let cardsImages = new Map();
 
 function showCrupierCards() {
   let crupierDiv = document.querySelector('#CrupierCards');
-  crupierDiv.innerHTML='';
+  crupierDiv.innerHTML = '';
   for (let i = 0; i < crupier.hand.cards.length; i++) {
     let card = document.createElement('img');
     card.src = cardsImages.get(
@@ -40,7 +40,7 @@ const crupierTurn = () => {
   crupier.hand.printHand();
   if (validateTopCrupier(crupier)) {
     crupier.hand.cards.push(game.giveCard(game, true));
-    showCrupierCards()
+    showCrupierCards();
     crupierTurn();
   } else {
     if (crupier.hand.hasHandSpecialValues()) {
@@ -49,7 +49,7 @@ const crupierTurn = () => {
     } else {
       console.log('crupier hand:');
       crupier.hand.printHand();
-      showCrupierCards()
+      showCrupierCards();
       let results = compareResults(crupier, players);
       console.log(results);
     }
@@ -67,13 +67,14 @@ const gameProcess = (isCrupier) => {
   isCrupier === false ? playerTurns() : crupierTurn();
 };
 
-const enablePlayer = ()=>{
-  let divToEnable = document.querySelector(`#cards${players[game.playerTurn].name}`);
-  divToEnable.classList.add("enabled");
-}
+const enablePlayer = () => {
+  let divToEnable = document.querySelector(
+    `#cards${players[game.playerTurn].name}`,
+  );
+  divToEnable.classList.add('enabled');
+};
 
 const setNextTurn = () => {
-
   if (game.playerTurn === players.length - 1) {
     gameProcess(true);
   } else {
@@ -130,7 +131,7 @@ function showPlayerCards() {
   playersCardsDiv.innerHTML = '';
   for (let i = 0; i < players.length; i++) {
     let playerDiv = document.createElement('div');
-    playerDiv.setAttribute("id",`cards${players[i].name}`);
+    playerDiv.setAttribute('id', `cards${players[i].name}`);
     let playerOptionsDiv = document.createElement('div');
     for (let j = 0; j < players[i].hand.cards.length; j++) {
       let card = document.createElement('img');
@@ -144,7 +145,7 @@ function showPlayerCards() {
     playersCardsDiv.appendChild(playerDiv);
     let options = askForOptions();
     playerOptionsDiv.classList.add('fColumn');
-    playerOptionsDiv.setAttribute("id",`options${players[i].name}`)
+    playerOptionsDiv.setAttribute('id', `options${players[i].name}`);
     for (let k = 0; k < options.length; k++) {
       let option = document.createElement('button');
       option.value = options[k].action;
@@ -170,9 +171,9 @@ const getPlayers = () => {
   for (let i = 0; i < numberOfPlayers; i++) {
     players.push(
       createPlayer(
-        playersTable.rows[i].cells[1].innerText,
         playersTable.rows[i].cells[2].innerText,
-        playersTable.rows[i].cells[0].innerText,
+        playersTable.rows[i].cells[3].innerText,
+        playersTable.rows[i].cells[1].innerText,
       ),
     );
   }
@@ -205,53 +206,86 @@ const getInitialCards = () => {
 };
 
 const startGame = () => {
-  deck = createDeck();
-  getPlayers();
-  getCrupier();
-  getNewGame();
-  getRules();
-  getInitialCards();
-  showCards();
-  enablePlayer();
+  if (validateMinPlayer()) {
+    deck = createDeck();
+    getPlayers();
+    getCrupier();
+    getNewGame();
+    getRules();
+    getInitialCards();
+    showCards();
+    enablePlayer();
+  }else{
+    alert("no players to play");
+  }
 };
 
-const createTextTd = (text) => {
+const validateMinPlayer = () => {
+  const tbody = document.querySelector('tbody');
+  return tbody.rows.length < 2 ? false : true;
+};
+
+const createTextTd = (text, isVisible) => {
   let td = document.createElement('td');
+  if (!isVisible) {
+    td.setAttribute('style', 'display:none');
+  }
   let tdText;
   tdText = document.createTextNode(text);
   td.appendChild(tdText);
   return td;
 };
 
+const createImg = () => {
+  let img = document.createElement('img');
+  img.setAttribute('src', '/dist/svg/img/minus.png');
+  img.classList.add('tableIcon');
+  return img;
+};
+
 function createRow() {
   let row = document.createElement('tr');
   let td = document.createElement('td');
-  row.appendChild(createTextTd(playerOrder));
-  const name = document.querySelector('input[type=text]');
-  row.appendChild(createTextTd(name.value));
+  row.appendChild(createTextTd(playerOrder, false));
   td = document.createElement('td');
-  const color = document.querySelector('input[type=color]');
+  td.appendChild(createImg());
+  row.appendChild(td);
+  const name = document.querySelector('#newPlayer');
+  row.appendChild(createTextTd(name.value, true));
+  name.value = '';
+  td = document.createElement('td');
+  const color = document.querySelector('#playerColor');
   td.style.backgroundColor = color.value;
   row.appendChild(td);
   playerOrder = playerOrder + 1;
   return row;
 }
 
-function addNewPlayer() {
+function addNewPlayer(button) {
   const tbody = document.querySelector('tbody');
-  tbody.appendChild(createRow());
+  if (tbody.rows.length === 4) {
+    alert('No more players can be added');
+    const name = document.querySelector('#newPlayer');
+    name.value = '';
+  } else {
+    tbody.appendChild(createRow());
+  }
+  if (tbody.rows.length === 4) {
+    button.setAttribute('disabled', 'true');
+    button.setAttribute('src', '/dist/svg/img/cancel.svg');
+  }
 }
 
 function addEventPlayer() {
-  const a = document.querySelector('input[type=button]');
-  a.addEventListener('click', function (event) {
-    event.preventDefault();
-    addNewPlayer();
+  const addPlayer = document.querySelector('.tableIcon');
+  addPlayer.addEventListener('click', function (event) {
+    event.preventDefault(this);
+    addNewPlayer(this);
   });
 }
 
 const addEventStartGame = () => {
-  const startButton = document.querySelector('.start');
+  const startButton = document.querySelector('.startImage');
   startButton.addEventListener('click', function (event) {
     startGame();
   });
