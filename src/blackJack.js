@@ -132,7 +132,22 @@ function showPlayerCards() {
   for (let i = 0; i < players.length; i++) {
     let playerDiv = document.createElement('div');
     playerDiv.setAttribute('id', `cards${players[i].name}`);
-    let playerOptionsDiv = document.createElement('div');
+    playerDiv.classList.add('playerCards');
+    playerDiv.classList.add('fColumn');
+    let playerNameDiv = document.createElement('div');
+    playerNameDiv.classList.add("fRow");
+    playerNameDiv.classList.add("aCenter");
+    playerNameDiv.classList.add("jCenter")
+    let name = document.createElement('h2');
+    name.textContent=`${players[i].name}`;
+    playerNameDiv.appendChild(name);
+    let clubs = document.querySelector('svg');
+    let cloneClubs = clubs.cloneNode(true);
+    cloneClubs.setAttribute('id',`clubs${players[i].name}`);
+    let trazado = cloneClubs.querySelector('#Trazado');
+    trazado.setAttribute('fill',`${players[i].color}`)
+    playerNameDiv.appendChild(cloneClubs);
+    let cardsDiv = document.createElement('div');
     for (let j = 0; j < players[i].hand.cards.length; j++) {
       let card = document.createElement('img');
       card.src = cardsImages.get(
@@ -140,10 +155,13 @@ function showPlayerCards() {
           players[i].hand.cards[j].suit.charAt(0),
       );
       card.classList.add('card');
-      playerDiv.appendChild(card);
+      cardsDiv.appendChild(card);
     }
+    playerDiv.appendChild(playerNameDiv);
+    playerDiv.appendChild(cardsDiv);
     playersCardsDiv.appendChild(playerDiv);
     let options = askForOptions();
+    let playerOptionsDiv = document.createElement('div');
     playerOptionsDiv.classList.add('fColumn');
     playerOptionsDiv.setAttribute('id', `options${players[i].name}`);
     for (let k = 0; k < options.length; k++) {
@@ -168,12 +186,17 @@ const getPlayers = () => {
   players = [];
   let playersTable = document.querySelector('tbody');
   let numberOfPlayers = playersTable.rows.length;
-  for (let i = 0; i < numberOfPlayers; i++) {
+  for (let i = 1; i < numberOfPlayers; i++) {
+
+    const style = getComputedStyle(playersTable.rows[i].cells[3]);
+    const bgColor = style.backgroundColor;
+    let convertedColor = rgbToHex(bgColor);
+
     players.push(
       createPlayer(
         playersTable.rows[i].cells[2].innerText,
-        playersTable.rows[i].cells[3].innerText,
-        playersTable.rows[i].cells[1].innerText,
+        convertedColor,
+        playersTable.rows[i].cells[0].innerText,
       ),
     );
   }
@@ -252,6 +275,7 @@ const createImg = (index) => {
   img.classList.add('tableIcon');
   img.addEventListener('click', function (event) {
     deleteRow(index);
+    createPlayerDiv();
   });
   return img;
 };
@@ -329,6 +353,44 @@ const existsSamePlayerColor = () => {
   return false;
 };
 
+const createPlayerDiv = () =>{
+  let playersCardsDiv = document.querySelector('#PlayersCards');
+  playersCardsDiv.innerHTML = '';
+  
+  let playersTable = document.querySelector('tbody');
+  let numberOfPlayers = playersTable.rows.length;
+  const name = document.querySelector('#newPlayer');
+  for (let i = 1; i < numberOfPlayers; i++) {
+    let cell = playersTable.rows[i].cells[3];
+    const style = getComputedStyle(cell);
+    const bgColor = style.backgroundColor;
+    let convertedColor = rgbToHex(bgColor);
+    let playerDiv = document.createElement('div');
+    playerDiv.setAttribute('id', `cards${playersTable.rows[i].cells[2].innerText}`);
+    playerDiv.classList.add('playerCards');
+    playerDiv.classList.add('fColumn');
+    let playerNameDiv = document.createElement('div');
+    playerNameDiv.classList.add("fRow");
+    playerNameDiv.classList.add("aCenter");
+    playerNameDiv.classList.add("jCenter")
+    
+    let name = document.createElement('h2');
+    name.textContent=`${playersTable.rows[i].cells[2].innerText}`;
+    playerNameDiv.appendChild(name);
+    let clubs = document.querySelector('svg');
+    let cloneClubs = clubs.cloneNode(true);
+    cloneClubs.setAttribute('id',`clubs${playersTable.rows[i].cells[2].innerText}`);
+    let trazado = cloneClubs.querySelector('#Trazado');
+    
+    trazado.setAttribute('fill',`${convertedColor}`)
+    playerNameDiv.appendChild(cloneClubs);
+    playerDiv.appendChild(playerNameDiv);
+    playerDiv.style.borderColor = `${convertedColor}`;
+    playersCardsDiv.appendChild(playerDiv);
+    
+  }
+}
+
 function addNewPlayer(button) {
   const tbody = document.querySelector('tbody');
 
@@ -348,6 +410,7 @@ function addNewPlayer(button) {
       break;
     default:
       tbody.appendChild(createRow());
+      createPlayerDiv();
       break;
   }
 

@@ -1,127 +1,142 @@
-body{
+body {
   font-family: Arial, Helvetica, sans-serif;
   background-color: #154946;
 }
-h2{
-align-self: center;
+h2 {
+  align-self: center;
 }
-input[type="text"]{
-  height:1.5rem;
+input[type='text'] {
+  height: 1.5rem;
   border: 0;
   font-size: 1rem;
   text-align: center;
   background-color: rgb(201, 231, 230);
 }
-input[type="color"]{
+input[type='color'] {
   height: 1.5rem;
-  border:0;
+  border: 0;
   background-color: rgb(201, 231, 230);
 }
-input[type="button"]{
+input[type='button'] {
   margin: 0.3rem;
 }
-label{
+label {
   height: 2rem;
   margin: 0.3rem;
 }
-table{
-  margin-left: 1rem;
-  border-collapse: collapse ;
+table {
+  margin-left: .5rem;
+  border-collapse: collapse;
 }
-tbody{
+tbody {
   margin-top: 1rem;
   border-right: 0.2rem solid grey;
   border-collapse: collapse;
 }
-td{
-  margin-left: .5rem;
+td {
+  margin-left: 0.5rem;
   border-right: 0.2rem solid lightgrey;
   border-top: 0.2rem solid lightgrey;
   border-bottom: 0.2rem solid lightgrey;
-  text-align: center  ;
+  text-align: center;
 }
 .fRow {
   display: flex;
   flex-direction: row;
 }
-.fColumn{
+.fColumn {
   display: flex;
   flex-direction: column;
 }
 
-.aSpaceAround{
-  align-items:space-around;
+.aSpaceAround {
+  align-items: space-around;
 }
-.aBaseLine{
+.aBaseLine {
   align-items: baseline;
 }
-.aCenter{
+.aCenter {
   align-items: center;
 }
-.aEnd{
+.aEnd {
   align-items: flex-end;
 }
-.jSpaceAround{
+.jSpaceAround {
   justify-content: space-around;
 }
-.jStart{
+.jStart {
   justify-content: flex-start;
 }
-.jCenter{
+.jCenter {
   justify-content: center;
 }
-.jEnd{
+.jEnd {
   justify-content: flex-end;
 }
-.flexExpand{
+.flexExpand {
   flex: 1;
 }
-.maxWidth{
+.maxWidth {
   width: 100%;
 }
-.rounded{
+.rounded {
   border-radius: 0.5rem;
 }
-.crupier{
+.crupier {
   height: 5rem;
 }
-.crupierDiv{
+.crupierDiv {
   height: 6rem;
 }
-#CrupierCards{
+.playerCards {
+  width: 33vw;
+  border-radius: 0.5rem;
+  border: 2px solid black;
+}
+#CrupierCards {
   background-color: rgb(138, 81, 81);
   height: 10rem;
   border-radius: 0.5rem;
   width: 50vw;
+  margin-bottom: 3rem;
 }
-.card{
+.card {
   height: 8rem;
-  margin: .5rem;
+  margin: 0.5rem;
 }
-.enabled{
+.enabled {
   background-color: blue;
 }
-.tableIcon{
+.tableIcon {
   height: 1rem;
   margin-right: 0.2rem;
 }
-.startImage{
+.startImage {
   height: 4rem;
   margin-left: 2rem;
   cursor: pointer;
 }
-#addButtonCell{
+#addButtonCell {
   /* background-color: rgb(201, 231, 230); */
-border-top: 0;
-border-bottom: 0;
-margin-right: 0.2rem;
-}
-.deleteButtonCell{
   border-top: 0;
   border-bottom: 0;
   margin-right: 0.2rem;
 }
-#addIcon{
+.deleteButtonCell {
+  border-top: 0;
+  border-bottom: 0;
+  margin-right: 0.2rem;
+}
+#addIcon {
   margin-right: 0.2rem;
   cursor: pointer;
+}
+#clubs {
+  width: 0;
+  height: 0;
+  position: absolute;
+  left: -10em;
+}
+svg{
+  margin-left: 1rem;
 }
