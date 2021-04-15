@@ -14,7 +14,7 @@ import {
   replaceCardValue,
 } from 'game/mainGame.mjs';
 import { createDeck } from 'deck/mainDeck.mjs';
-import { doc } from 'prettier';
+import confetti from 'canvas-confetti';
 
 let deck;
 let game;
@@ -26,14 +26,19 @@ let cardsImages = new Map();
 function showCrupierCards() {
   let crupierDiv = document.querySelector('#CrupierCards');
   crupierDiv.innerHTML = '';
+  let total = document.createElement('h2');
+  total.textContent = `Total = ${crupier.hand.getHandValue()}`;
+  crupierDiv.appendChild(total);
+  let cardsDiv = document.createElement('div');
   for (let i = 0; i < crupier.hand.cards.length; i++) {
     let card = document.createElement('img');
     card.src = cardsImages.get(
       crupier.hand.cards[i].litValue + crupier.hand.cards[i].suit.charAt(0),
     );
     card.classList.add('card');
-    crupierDiv.appendChild(card);
+    cardsDiv.appendChild(card);
   }
+  crupierDiv.appendChild(cardsDiv);
 }
 
 const crupierTurn = () => {
@@ -52,6 +57,71 @@ const crupierTurn = () => {
       showCrupierCards();
       let results = compareResults(crupier, players);
       console.log(results);
+      showResults(results);
+    }
+  }
+};
+var count = 200;
+var defaults = {
+  origin: { y: 0.7 },
+};
+
+function randomInRange(min, max) {
+  return Math.random() * (max - min) + min;
+}
+
+const rainConfetti = () => {
+  var duration = 15 * 1000;
+  var animationEnd = Date.now() + duration;
+  var defaults = { startVelocity: 30, spread: 360, ticks: 60, zIndex: 0 };
+  var interval = setInterval(function () {
+    var timeLeft = animationEnd - Date.now();
+
+    if (timeLeft <= 0) {
+      return clearInterval(interval);
+    }
+    var particleCount = 50 * (timeLeft / duration);
+
+    confetti(
+      Object.assign({}, defaults, {
+        particleCount,
+        origin: { x: randomInRange(0.1, 0.3), y: Math.random() - 0.2 },
+      }),
+    );
+    confetti(
+      Object.assign({}, defaults, {
+        particleCount,
+        origin: { x: randomInRange(0.7, 0.9), y: Math.random() - 0.2 },
+      }),
+    );
+  }, 250);
+};
+
+const showResults = (results) => {
+  for (let i = 0; i < results.length; i++) {
+    let total = document.createElement('h2');
+    total.textContent = `Total = ${players[results[i].player].hand.getHandValue()}`;
+    let playerCards = document.querySelector(`#cards${players[results[i].player].name}`);
+    let cardsDiv = playerCards.querySelector('.cardsDiv');
+    cardsDiv.innerHTML = '';
+    if (results[i].result === 'W') {     
+      let winner = document.createElement('h2');
+      let canvas = document.createElement('canvas');
+      canvas.classList.add('winnerCanvas');
+      confetti.create(canvas, {
+        resize: true,
+        useWorker: true,
+      })({ particleCount: 500, spread: 500 });
+      winner.textContent = 'YOU WIN!';
+      let resultImg = document.createElement('img');
+      playerCards.appendChild(total);
+      playerCards.appendChild(winner);
+      rainConfetti();
+    } else {
+      let winner = document.createElement('h2');
+      winner.textContent = 'YOU LOSE!';
+      playerCards.appendChild(total);
+      playerCards.appendChild(winner);
     }
   }
 };
@@ -62,20 +132,34 @@ const playerTurns = () => {
   enablePlayer();
 };
 
-const gameProcess = (isCrupier) => {
-  console.log('-------------------------');
+const gameProcess = (isCrupier) =>
   isCrupier === false ? playerTurns() : crupierTurn();
-};
 
 const enablePlayer = () => {
   let divToEnable = document.querySelector(
     `#cards${players[game.playerTurn].name}`,
   );
   divToEnable.classList.add('enabled');
+  let buttons = divToEnable.querySelectorAll('.buttonIcon');
+  for (let i = 0; i < buttons.length; i++) {
+    buttons[i].classList.remove('hidden');
+  }
+};
+
+const disablePlayer = (playerIndex) => {
+  let divToEnable = document.querySelector(
+    `#cards${players[playerIndex].name}`,
+  );
+  divToEnable.classList.remove('enabled');
+  let buttons = divToEnable.querySelectorAll('.buttonIcon');
+  for (let i = 0; i < buttons.length; i++) {
+    buttons[i].classList.add('hidden');
+  }
 };
 
 const setNextTurn = () => {
   if (game.playerTurn === players.length - 1) {
+    disablePlayer(players.length - 1);
     gameProcess(true);
   } else {
     game.nextPlayerTurn();
@@ -109,6 +193,7 @@ const validateTurn = (playerIndex, result) => {
     }
   } else if (game.playerTurn >= players.length) {
     noMoreCards(playerIndex);
+    disablePlayer(players.length - 1);
     gameProcess(true);
   } else {
     noMoreCards(playerIndex);
@@ -134,20 +219,22 @@ function showPlayerCards() {
     playerDiv.setAttribute('id', `cards${players[i].name}`);
     playerDiv.classList.add('playerCards');
     playerDiv.classList.add('fColumn');
+    playerDiv.style.borderColor = `${players[i].color}`;
     let playerNameDiv = document.createElement('div');
-    playerNameDiv.classList.add("fRow");
-    playerNameDiv.classList.add("aCenter");
-    playerNameDiv.classList.add("jCenter")
+    playerNameDiv.classList.add('fRow');
+    playerNameDiv.classList.add('aCenter');
+    playerNameDiv.classList.add('jCenter');
     let name = document.createElement('h2');
-    name.textContent=`${players[i].name}`;
+    name.textContent = `${players[i].name}`;
     playerNameDiv.appendChild(name);
     let clubs = document.querySelector('svg');
     let cloneClubs = clubs.cloneNode(true);
-    cloneClubs.setAttribute('id',`clubs${players[i].name}`);
+    cloneClubs.setAttribute('id', `clubs${players[i].name}`);
     let trazado = cloneClubs.querySelector('#Trazado');
-    trazado.setAttribute('fill',`${players[i].color}`)
+    trazado.setAttribute('fill', `${players[i].color}`);
     playerNameDiv.appendChild(cloneClubs);
     let cardsDiv = document.createElement('div');
+    cardsDiv.classList.add('cardsDiv');
     for (let j = 0; j < players[i].hand.cards.length; j++) {
       let card = document.createElement('img');
       card.src = cardsImages.get(
@@ -157,23 +244,40 @@ function showPlayerCards() {
       card.classList.add('card');
       cardsDiv.appendChild(card);
     }
-    playerDiv.appendChild(playerNameDiv);
-    playerDiv.appendChild(cardsDiv);
-    playersCardsDiv.appendChild(playerDiv);
     let options = askForOptions();
     let playerOptionsDiv = document.createElement('div');
-    playerOptionsDiv.classList.add('fColumn');
+    playerOptionsDiv.classList.add('fRow');
+    playerOptionsDiv.classList.add('jEnd');
     playerOptionsDiv.setAttribute('id', `options${players[i].name}`);
     for (let k = 0; k < options.length; k++) {
-      let option = document.createElement('button');
-      option.value = options[k].action;
-      option.textContent = options[k].action;
-      option.addEventListener('click', function (event) {
-        processOption(i, options[k].key);
-      });
-      playerOptionsDiv.appendChild(option);
+      if (options[k].key !== 'X') {
+        let imgOption = document.createElement('img');
+        switch (options[k].key) {
+          case 'P':
+            imgOption.setAttribute('src', '/dist/svg/img/detener.svg');
+            imgOption.setAttribute('alt', 'stand');
+            imgOption.setAttribute('title', 'stand');
+            break;
+          case 'C':
+            imgOption.setAttribute('src', '/dist/svg/img/tarjetas.svg');
+            imgOption.setAttribute('alt', 'card');
+            imgOption.setAttribute('title', 'card');
+            break;
+        }
+        imgOption.classList.add('buttonIcon');
+        imgOption.classList.add('hidden');
+        imgOption.addEventListener('click', function (event) {
+          processOption(i, options[k].key);
+        });
+        playerOptionsDiv.appendChild(imgOption);
+      }
     }
-    playersCardsDiv.appendChild(playerOptionsDiv);
+    playerDiv.appendChild(playerNameDiv);
+    cardsDiv.appendChild(playerOptionsDiv);
+    playerDiv.appendChild(cardsDiv);
+    playersCardsDiv.appendChild(playerDiv);
+
+    // playersCardsDiv.appendChild(playerOptionsDiv);
   }
 }
 
@@ -187,7 +291,6 @@ const getPlayers = () => {
   let playersTable = document.querySelector('tbody');
   let numberOfPlayers = playersTable.rows.length;
   for (let i = 1; i < numberOfPlayers; i++) {
-
     const style = getComputedStyle(playersTable.rows[i].cells[3]);
     const bgColor = style.backgroundColor;
     let convertedColor = rgbToHex(bgColor);
@@ -227,6 +330,11 @@ const getInitialCards = () => {
   getPlayersCards();
   getCrupierCards();
 };
+const changeCrupierEvent = () =>{
+  let crupier = document.querySelector('.startImage');
+  crupier.removeEventListener('click');
+
+}
 
 const startGame = () => {
   if (validateMinPlayer()) {
@@ -316,25 +424,26 @@ const existsSamePlayerName = () => {
     if (name.value === playersTable.rows[i].cells[2].innerText) {
       return true;
     }
-    //  playersTable.rows[i].cells[3].innerText;
   }
   return false;
 };
 
-
-const ToHex = function (rgb) { 
+const ToHex = function (rgb) {
   var hex = Number(rgb).toString(16);
   if (hex.length < 2) {
-       hex = "0" + hex;
+    hex = '0' + hex;
   }
   return hex;
 };
 
 function rgbToHex(color) {
-  let rgb = color.replace("(","").replace(")","").replace("rgb","").split(",");
-  return "#" + ToHex(rgb[0]) + ToHex(rgb[1]) + ToHex(rgb[2]);
+  let rgb = color
+    .replace('(', '')
+    .replace(')', '')
+    .replace('rgb', '')
+    .split(',');
+  return '#' + ToHex(rgb[0]) + ToHex(rgb[1]) + ToHex(rgb[2]);
 }
-
 
 const existsSamePlayerColor = () => {
   let playersTable = document.querySelector('tbody');
@@ -353,10 +462,10 @@ const existsSamePlayerColor = () => {
   return false;
 };
 
-const createPlayerDiv = () =>{
+const createPlayerDiv = () => {
   let playersCardsDiv = document.querySelector('#PlayersCards');
   playersCardsDiv.innerHTML = '';
-  
+
   let playersTable = document.querySelector('tbody');
   let numberOfPlayers = playersTable.rows.length;
   const name = document.querySelector('#newPlayer');
@@ -366,30 +475,35 @@ const createPlayerDiv = () =>{
     const bgColor = style.backgroundColor;
     let convertedColor = rgbToHex(bgColor);
     let playerDiv = document.createElement('div');
-    playerDiv.setAttribute('id', `cards${playersTable.rows[i].cells[2].innerText}`);
+    playerDiv.setAttribute(
+      'id',
+      `cards${playersTable.rows[i].cells[2].innerText}`,
+    );
     playerDiv.classList.add('playerCards');
     playerDiv.classList.add('fColumn');
     let playerNameDiv = document.createElement('div');
-    playerNameDiv.classList.add("fRow");
-    playerNameDiv.classList.add("aCenter");
-    playerNameDiv.classList.add("jCenter")
-    
+    playerNameDiv.classList.add('fRow');
+    playerNameDiv.classList.add('aCenter');
+    playerNameDiv.classList.add('jCenter');
+
     let name = document.createElement('h2');
-    name.textContent=`${playersTable.rows[i].cells[2].innerText}`;
+    name.textContent = `${playersTable.rows[i].cells[2].innerText}`;
     playerNameDiv.appendChild(name);
     let clubs = document.querySelector('svg');
     let cloneClubs = clubs.cloneNode(true);
-    cloneClubs.setAttribute('id',`clubs${playersTable.rows[i].cells[2].innerText}`);
+    cloneClubs.setAttribute(
+      'id',
+      `clubs${playersTable.rows[i].cells[2].innerText}`,
+    );
     let trazado = cloneClubs.querySelector('#Trazado');
-    
-    trazado.setAttribute('fill',`${convertedColor}`)
+
+    trazado.setAttribute('fill', `${convertedColor}`);
     playerNameDiv.appendChild(cloneClubs);
     playerDiv.appendChild(playerNameDiv);
     playerDiv.style.borderColor = `${convertedColor}`;
     playersCardsDiv.appendChild(playerDiv);
-    
   }
-}
+};
 
 function addNewPlayer(button) {
   const tbody = document.querySelector('tbody');
@@ -413,7 +527,6 @@ function addNewPlayer(button) {
       createPlayerDiv();
       break;
   }
-
 
   if (tbody.rows.length === 4) {
     button.setAttribute('disabled', 'true');

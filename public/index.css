@@ -10,12 +10,12 @@ input[type='text'] {
   border: 0;
   font-size: 1rem;
   text-align: center;
-  background-color: rgb(201, 231, 230);
+   background-color: #0d857f; 
 }
 input[type='color'] {
   height: 1.5rem;
   border: 0;
-  background-color: rgb(201, 231, 230);
+   background-color: #0d857f; 
 }
 input[type='button'] {
   margin: 0.3rem;
@@ -30,14 +30,14 @@ table {
 }
 tbody {
   margin-top: 1rem;
-  border-right: 0.2rem solid grey;
+  border-right: 0.2rem solid black;
   border-collapse: collapse;
 }
 td {
   margin-left: 0.5rem;
-  border-right: 0.2rem solid lightgrey;
-  border-top: 0.2rem solid lightgrey;
-  border-bottom: 0.2rem solid lightgrey;
+  border-right: 0.2rem solid black;
+  border-top: 0.2rem solid black;
+  border-bottom: 0.2rem solid black;
   text-align: center;
 }
 .fRow {
@@ -83,41 +83,53 @@ td {
   border-radius: 0.5rem;
 }
 .crupier {
-  height: 5rem;
+  height: 6rem;
 }
 .crupierDiv {
   height: 6rem;
 }
 .playerCards {
-  width: 33vw;
+  width: 31vw;
+  min-height: 30vh;
   border-radius: 0.5rem;
   border: 2px solid black;
 }
 #CrupierCards {
   background-color: rgb(138, 81, 81);
-  height: 10rem;
+  height: 35vh;
   border-radius: 0.5rem;
-  width: 50vw;
+  width: 70vw;
   margin-bottom: 3rem;
 }
 .card {
-  height: 8rem;
+  height: 15vh;
   margin: 0.5rem;
 }
 .enabled {
-  background-color: blue;
+  background-color: #0d857f;
 }
 .tableIcon {
-  height: 1rem;
+  height: 1.5rem;
   margin-right: 0.2rem;
-}
-.startImage {
-  height: 4rem;
-  margin-left: 2rem;
   cursor: pointer;
 }
+.buttonIcon{
+  height: 1.5rem;
+  margin-right: 0.2rem;
+  margin-bottom: 0.3rem;
+  margin-left: 0.2rem;
+  cursor: pointer;
+}
+.startImage {
+  /* height: 4rem;
+  margin-left: 2rem; */
+  cursor: pointer;
+}
+.hidden{
+  display: none;
+}
 #addButtonCell {
-  /* background-color: rgb(201, 231, 230); */
+  /* background-color: #0d857f; */
   border-top: 0;
   border-bottom: 0;
   margin-right: 0.2rem;
@@ -127,6 +139,17 @@ td {
   border-bottom: 0;
   margin-right: 0.2rem;
 }
+.result{
+  height: 10vh;
+  position:absolute;
+  align-self: flex-start;
+
+}
+.winnerCanvas{
+  height: 100%;
+  width: 100%;
+}
+
 #addIcon {
   margin-right: 0.2rem;
   cursor: pointer;
