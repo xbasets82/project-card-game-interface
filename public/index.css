@@ -1,6 +1,6 @@
 body {
   font-family: Arial, Helvetica, sans-serif;
-  background-color: #154946;
+  background-color: #282d3a;
 }
 h2 {
   align-self: center;
@@ -88,6 +88,10 @@ td {
 .crupierDiv {
   height: 6rem;
 }
+.gameOption{
+  height: 4rem;
+  cursor: pointer;
+}
 .playerCards {
   width: 31vw;
   min-height: 30vh;
@@ -95,8 +99,8 @@ td {
   border: 2px solid black;
 }
 #CrupierCards {
-  background-color: rgb(138, 81, 81);
-  height: 35vh;
+  background-color: #0d857f;
+  height: 30vh;
   border-radius: 0.5rem;
   width: 70vw;
   margin-bottom: 3rem;
@@ -162,4 +166,10 @@ td {
 }
 svg{
   margin-left: 1rem;
+}
+.logo{
+  height: 20vh;
+}
+.logoimg{
+  height: 10vh;
 }

@@ -38,63 +38,15 @@
 
     <script type="module" src="/dist/blackJack.js"></script>
     <header>
-      <div class="fRow jCenter">
-        <h1>BLACK JACK</h1>
+      <div class="fRow jStart aCenter">
+        <img class="logoimg" src="/dist/svg/img/startGame.svg">
+        <img class="logo" src="/dist/svg/img/bjTitle.svg" alt="Black Jack">
       </div>
     </header>
     <main>
       <div class="fRow jCenter">
         <div class="fColumn">
-          <!-- <div class="fColumn">
-            <table>
-              <thead>
-                <tr>
-                  <th></th>
-                  <th style="display: none"></th>
-                  <th>Name</th>
-                  <th>Color</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td id="addButtonCell">
-                    <img
-                      src="/dist/svg/img/plus.svg"
-                      alt="add player"
-                      class="tableIcon"
-                      id="addIcon"
-                    />
-                  </td>
-                  <td style="display: none"></td>
-                  <td>
-                    <input type="text" id="newPlayer" />
-                  </td>
-                  <td>
-                    <input
-                      type="color"
-                      id="playerColor"
-                      list="presetColors"
-                      value="#FF0000"
-                    />
-                    <datalist id="presetColors">
-                      <option>#FF0000</option>
-                      <option>#00FF00</option>
-                      <option>#0000FF</option>
-                    </datalist>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-          </div> -->
-        </div>
-        <!-- <div class="fColumn jEnd">
-          <img
-            src="/dist/svg/img/startGame.svg"
-            alt="start"
-            title="start"
-            class="startImage"
-          />
-        </div> -->
+          </div>
       </div>
       <div class="fColumn jCenter aCenter maxWidth">
         <div class="fRow jCenter aEnd crupierDiv">
@@ -102,8 +54,15 @@
             src="/dist/svg/img/crupierBJ.svg"
             alt="crupier"
             tittle="crupier"
-            class="crupier startImage"
+            class="crupier "
           />
+          <div class="fColumn jCenter gameOptions">
+            <img src="/dist/svg/img/deal.svg"
+                alt="deal"
+                tittle="deal"
+                class="gameOption startImage"
+            />    
+          </div>
         </div>
         <div id="CrupierCards" class="fColumn jStart aCenter">
           <div class="fRow">
@@ -128,7 +87,7 @@
                       id="addIcon"
                     />
                   </td>
-                  <td style="display: none"></td>
+                  <td class="hidden"></td>
                   <td>
                     <input type="text" id="newPlayer" />
                   </td>
@@ -149,14 +108,7 @@
               </tbody>
             </table>
           </div>
-          <div class="fColumn jEnd">
-            <img
-              src="/dist/svg/img/startGame.svg"
-              alt="start"
-              title="start"
-              class="startImage"
-            />
-          </div>
+         
         </div>
         </div>
       </div>
