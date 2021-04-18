@@ -4,6 +4,7 @@ body {
 }
 h2 {
   align-self: center;
+  font-size: 1.5rem;
 }
 input[type='text'] {
   height: 1.5rem;
@@ -83,13 +84,13 @@ td {
   border-radius: 0.5rem;
 }
 .crupier {
-  height: 6rem;
+  height: 12vh;
 }
 .crupierDiv {
   height: 6rem;
 }
 .gameOption{
-  height: 4rem;
+  height: 6vh;
   cursor: pointer;
 }
 .playerCards {
@@ -97,6 +98,10 @@ td {
   min-height: 30vh;
   border-radius: 0.5rem;
   border: 2px solid black;
+}
+.abs{
+  position: absolute;
+  right:10vh;
 }
 #CrupierCards {
   background-color: #0d857f;
@@ -118,22 +123,19 @@ td {
   cursor: pointer;
 }
 .buttonIcon{
-  height: 1.5rem;
+  height: 3rem;
   margin-right: 0.2rem;
   margin-bottom: 0.3rem;
   margin-left: 0.2rem;
   cursor: pointer;
 }
 .startImage {
-  /* height: 4rem;
-  margin-left: 2rem; */
   cursor: pointer;
 }
 .hidden{
   display: none;
 }
 #addButtonCell {
-  /* background-color: #0d857f; */
   border-top: 0;
   border-bottom: 0;
   margin-right: 0.2rem;
@@ -168,8 +170,11 @@ svg{
   margin-left: 1rem;
 }
 .logo{
-  height: 20vh;
+  height: 15vh;
 }
 .logoimg{
-  height: 10vh;
+  height: 7vh;
+}
+.border{
+  border: 2px solid black;
 }

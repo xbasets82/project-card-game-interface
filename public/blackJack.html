@@ -38,10 +38,17 @@
 
     <script type="module" src="/dist/blackJack.js"></script>
     <header>
-      <div class="fRow jStart aCenter">
+      <div class="fRow jCenter aCenter">
         <img class="logoimg" src="/dist/svg/img/startGame.svg">
         <img class="logo" src="/dist/svg/img/bjTitle.svg" alt="Black Jack">
+        <div class="abs border rounded inGameOptions fColumn">
+          <img src="/dist/svg/img/deal.svg"
+          alt="deal"
+          tittle="deal"
+          class="gameOption startImage"/>    
+        </div>
       </div>
+      
     </header>
     <main>
       <div class="fRow jCenter">
@@ -56,18 +63,18 @@
             tittle="crupier"
             class="crupier "
           />
-          <div class="fColumn jCenter gameOptions">
+          <!-- <div class="fColumn jCenter gameOptions">
             <img src="/dist/svg/img/deal.svg"
                 alt="deal"
                 tittle="deal"
                 class="gameOption startImage"
             />    
-          </div>
+          </div> -->
         </div>
         <div id="CrupierCards" class="fColumn jStart aCenter">
           <div class="fRow">
           <div class="fColumn">
-            <h2>add players:</h2>
+            <h2>Add players:</h2>
             <table>
               <thead>
                 <tr>
