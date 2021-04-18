@@ -109,15 +109,8 @@ const showResults = (results) => {
     let cardsDiv = playerCards.querySelector('.cardsDiv');
     cardsDiv.innerHTML = '';
     let winner = document.createElement('h2');
-    if (results[i].result === 'W') {  
-      let canvas = document.createElement('canvas');
-      canvas.classList.add('winnerCanvas');
-      confetti.create(canvas, {
-        resize: true,
-        useWorker: true,
-      })({ particleCount: 500, spread: 500 });
+    if (results[i].result === 'W') { 
       winner.textContent = 'YOU WIN!';
-      let resultImg = document.createElement('img');
       rainConfetti();
     } else if (results[i].result === 'D') {
       winner.textContent = 'DEUCE!';
@@ -369,7 +362,7 @@ const endCurrentGame = () => {
 location.reload();
 }
 const changeGameOptions = () =>{
-  let divGameOptions = document.querySelector('.gameOptions');
+  let divGameOptions = document.querySelector('.inGameOptions');
   divGameOptions.innerHTML = '';
   let endGame = document.createElement('img');
   endGame.src = '/dist/svg/img/endGame.svg';
