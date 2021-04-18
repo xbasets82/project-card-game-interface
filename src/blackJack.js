@@ -163,9 +163,8 @@ const setNextTurn = () => {
   }
 };
 
-const moreThan21 = (currentTurn) => {
-  console.log(`El jugador ${players[currentTurn].name} se ha pasado`);
-  showPlayerCards();
+const moreThan21 = (currentTurn) => {  
+showPlayerCards();
 };
 
 const noMoreCards = (currentTurn) => {
@@ -292,8 +291,6 @@ function showPlayerCards() {
     cardsDiv.appendChild(playerOptionsDiv);
     playerDiv.appendChild(cardsDiv);
     playersCardsDiv.appendChild(playerDiv);
-
-    // playersCardsDiv.appendChild(playerOptionsDiv);
   }
 }
 
